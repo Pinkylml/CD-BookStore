@@ -19,7 +19,7 @@ public class Main {
         book.setNbOfPage(354);
         book.setIllustrations(false);
         // Get an entity manager factory and an entity manager
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("chapter02PU");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookstorePU");
         EntityManager em = emf.createEntityManager();
         // Get a transaction
         EntityTransaction tx = em.getTransaction();

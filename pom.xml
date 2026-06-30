@@ -24,11 +24,11 @@
             <version>2.5.2</version>
         </dependency>
 
-        <!-- The Embedded Derby Database Engine -->
+        <!-- PostgreSQL driver -->
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.4.2.0</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.3</version>
         </dependency>
     </dependencies>
 

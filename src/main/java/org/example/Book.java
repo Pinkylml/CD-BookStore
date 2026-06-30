@@ -1,68 +1,33 @@
 package org.example;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 
-import  javax.persistence.Temporal;
-import  javax.persistence.TemporalType;
-import  javax.persistence.Transient;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
 @NamedQuery(name = "findAllBooks", query = "SELECT b FROM Book b")
-public class Book {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Column(nullable = false)
-    private String title;
-
-    private Float price;
-
-    @Column(length = 2000)
-    private String description;
+@DiscriminatorValue("B")
+public class Book extends Item {
 
     private String isbn;
     private Integer nbOfPage;
     private Boolean illustrations;
 
-    public Long getId() {
-        return id;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
+    @Transient
+    private Float internalDiscount;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Enumerated(EnumType.STRING)
+    private Language language;
 
-    public String getTitle() {
-        return title;
-    }
+    @Embedded
+    private  Address publisherAddress;
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    @OneToMany(mappedBy = "book")
+    private List<Chapter> chapters;
 
     public String getIsbn() {
         return isbn;
@@ -86,5 +51,45 @@ public class Book {
 
     public void setIllustrations(Boolean illustrations) {
         this.illustrations = illustrations;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Float getInternalDiscount() {
+        return internalDiscount;
+    }
+
+    public void setInternalDiscount(Float internalDiscount) {
+        this.internalDiscount = internalDiscount;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public Address getPublisherAddress() {
+        return publisherAddress;
+    }
+
+    public void setPublisherAddress(Address publisherAddress) {
+        this.publisherAddress = publisherAddress;
+    }
+
+    public List<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<Chapter> chapters) {
+        this.chapters = chapters;
     }
 }
