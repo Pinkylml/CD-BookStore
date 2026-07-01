@@ -18,7 +18,18 @@ public class Main {
         book.setIsbn("1-84023-742-2");
         book.setNbOfPage(354);
         book.setIllustrations(false);
-        // Get an entity manager factory and an entity manager
+
+
+
+        Book book2 = new Book();
+        book2.setTitle("El mundo de Sofía");
+        book2.setPrice(10F);
+        book2.setDescription("History of philosofy");
+        book2.setNbOfPage(498);
+        book2.setIllustrations(false);
+        Chapter chap = new Chapter("El Jardín del Edén, El Sombrero de Copa y Los Mitos",book2);
+        book2.addChapter(chap);
+            // Get an entity manager factory and an entity manager
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookstorePU");
         EntityManager em = emf.createEntityManager();
         // Get a transaction
@@ -28,10 +39,20 @@ public class Main {
 
         // 2. PERSIST THE BOOK OBJECT HERE
         em.persist(book);
-
-
         // 3. COMMIT THE TRANSACTION HERE
         tx.commit();
+
+        try {
+            tx.begin();
+            em.persist(book2);
+            tx.commit();
+            System.out.println("✅ ÉXITO: El libro 2 y su capítulo fueron guardados en la tabla ITEM y CHAPTER.");
+        } catch (Exception e) {
+
+            System.out.println("❌ ERROR TRANSACCIONAL: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+
 
         System.out.println("Book saved with ID: " + book.getId());
 

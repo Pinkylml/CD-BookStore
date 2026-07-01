@@ -2,6 +2,7 @@ package org.example;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,8 +27,19 @@ public class Book extends Item {
     @Embedded
     private  Address publisherAddress;
 
-    @OneToMany(mappedBy = "book")
-    private List<Chapter> chapters;
+    @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    private List<Chapter> chapters = new ArrayList<>();
+
+
+
+    public void addChapter(Chapter chapter) {
+        this.chapters.add(chapter);
+        if (chapter.getBook() != this) {
+            chapter.setBook(this);
+        }
+    }
+
+    //getters and setters
 
     public String getIsbn() {
         return isbn;
