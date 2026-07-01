@@ -9,6 +9,7 @@
         <class>org.example.Item</class>
         <class>org.example.Chapter</class>
         <class>org.example.Author</class>
+        <class>org.example.News</class>
 
         <properties>
             <!-- Database Connection Settings -->

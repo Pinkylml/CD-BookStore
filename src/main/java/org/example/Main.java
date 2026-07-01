@@ -85,8 +85,22 @@ public class Main {
             book4.setPublisherAddress(addQuixote);
             em.persist(book4);
 
+            // Create and persist News objects
+            NewsId newsId1 = new NewsId();
+            newsId1.setTitle("New Book Release");
+            newsId1.setLanguage(Language.ENGLISH);
+            News news1 = new News(newsId1, "A new book by a famous author is now available.");
+            em.persist(news1);
+
+            NewsId newsId2 = new NewsId();
+            newsId2.setTitle("Lanzamiento de Libro");
+            newsId2.setLanguage(Language.SPANISH);
+            News news2 = new News(newsId2, "Un nuevo libro de un autor famoso ya está disponible.");
+            em.persist(news2);
+
+
             tx.commit();
-            System.out.println("✅ SUCCESS: All books were saved to the database.");
+            System.out.println("✅ SUCCESS: All books and news were saved to the database.");
 
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
