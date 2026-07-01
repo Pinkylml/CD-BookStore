@@ -30,6 +30,7 @@ public class Book extends Item {
 
 
     @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OrderColumn(name = "chapter_index")
     private List<Chapter> chapters = new ArrayList<>();
 
     @Basic(fetch = FetchType.LAZY)

@@ -113,6 +113,19 @@ public class Main {
             System.out.println(" - " + b.getTitle() + " price: " + b.getPrice());
         }
 
+
+        Book orderedBook = em.find(Book.class, 2L); // Let's check 'El mundo de Sofía'
+
+        if (orderedBook != null) {
+            System.out.println("\n📖 Verifying Chapter Order for: " + orderedBook.getTitle());
+
+            // Loop through the list and print the index and title
+            List<Chapter> chapters = orderedBook.getChapters();
+            for (int i = 0; i < chapters.size(); i++) {
+                System.out.println("   Index " + i + " -> " + chapters.get(i).getTitle());
+            }
+        }
+
         // Close resources
         em.close();
         emf.close();
