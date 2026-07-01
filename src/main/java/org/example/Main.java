@@ -29,6 +29,17 @@ public class Main {
         book2.setIllustrations(false);
         Chapter chap = new Chapter("El Jardín del Edén, El Sombrero de Copa y Los Mitos",book2);
         book2.addChapter(chap);
+        Address addBook2 = new Address();
+        addBook2.setCity("Quito");
+        addBook2.setState("Pichincha");
+        addBook2.setCountry("Ecuador");
+        addBook2.setStreet1("Av.Maldonado");
+
+        book2.setLanguage(Language.SPANISH);
+        book2.setPublisherAddress(addBook2);
+
+
+
             // Get an entity manager factory and an entity manager
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookstorePU");
         EntityManager em = emf.createEntityManager();

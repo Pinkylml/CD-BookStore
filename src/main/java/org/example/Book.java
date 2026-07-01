@@ -24,12 +24,47 @@ public class Book extends Item {
     @Enumerated(EnumType.STRING)
     private Language language;
 
+
     @Embedded
-    private  Address publisherAddress;
+    private Address publisherAddress;
+
 
     @OneToMany(mappedBy = "book", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<Chapter> chapters = new ArrayList<>();
 
+    @Basic(fetch = FetchType.LAZY)
+    @Lob
+    private byte[] eBook;
+
+    @ElementCollection
+    @CollectionTable(name = "book_tags")
+    @Column(name = "tag_name")
+    private List<String> tags = new ArrayList<String>();
+
+
+    public Address getPublisherAddress() {
+        return publisherAddress;
+    }
+
+    public void setPublisherAddress(Address publisherAddress) {
+        this.publisherAddress = publisherAddress;
+    }
+
+    public byte[] geteBook() {
+        return eBook;
+    }
+
+    public void seteBook(byte[] eBook) {
+        this.eBook = eBook;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
 
 
     public void addChapter(Chapter chapter) {
@@ -89,14 +124,6 @@ public class Book extends Item {
         this.language = language;
     }
 
-    public Address getPublisherAddress() {
-        return publisherAddress;
-    }
-
-    public void setPublisherAddress(Address publisherAddress) {
-        this.publisherAddress = publisherAddress;
-    }
-
     public List<Chapter> getChapters() {
         return chapters;
     }
@@ -104,4 +131,5 @@ public class Book extends Item {
     public void setChapters(List<Chapter> chapters) {
         this.chapters = chapters;
     }
+
 }
