@@ -42,6 +42,13 @@ public class Book extends Item {
     private List<String> tags = new ArrayList<String>();
 
 
+    @ManyToMany
+    @JoinTable(name = "book_author")
+    private List<Author> authors = new ArrayList<>();
+
+
+
+
     public Address getPublisherAddress() {
         return publisherAddress;
     }

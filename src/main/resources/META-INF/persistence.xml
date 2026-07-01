@@ -8,6 +8,7 @@
         <class>org.example.Book</class>
         <class>org.example.Item</class>
         <class>org.example.Chapter</class>
+        <class>org.example.Author</class>
 
         <properties>
             <!-- Database Connection Settings -->
