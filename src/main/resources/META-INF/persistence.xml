@@ -3,6 +3,7 @@
 
     <persistence-unit name="bookstorePU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <mapping-file>META-INF/orm.xml</mapping-file>
 
         <!-- 1. ADD FULLY QUALIFIED CLASS NAME HERE -->
         <class>org.example.Book</class>

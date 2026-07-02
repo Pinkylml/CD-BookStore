@@ -8,17 +8,7 @@ import java.util.List;
 
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "findAllBooks", query = "SELECT b FROM Book b"),
-        @NamedQuery(
-                name = "Book.findByAuthor",
-                query = "SELECT b FROM Book b JOIN b.authors a WHERE a.name = :authorName"
-        )
-
-})
-
 @DiscriminatorValue("B")
-
 public class Book extends Item {
 
     private String isbn;

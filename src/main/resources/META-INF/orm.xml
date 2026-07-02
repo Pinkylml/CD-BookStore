@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" version="2.1">
+
+    <named-query name="findAllBooks">
+        <query>SELECT b FROM Book b</query>
+    </named-query>
+
+    <named-query name="Book.findByAuthor">
+        <query>SELECT b FROM Book b JOIN b.authors a WHERE a.name = :authorName</query>
+    </named-query>
+
+    <named-query name="Book.priceAndLanguage">
+        <query>SELECT b FROM Book b WHERE b.price > :minPrice AND b.language = :lang</query>
+    </named-query>
+
+</entity-mappings>
