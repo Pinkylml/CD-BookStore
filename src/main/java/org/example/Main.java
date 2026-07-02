@@ -1,9 +1,6 @@
 package org.example;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -20,6 +17,11 @@ public class Main {
         try {
             tx.begin();
 
+            Author author1 = new Author();
+            author1.setName("Douglas Adams");
+            author1.setEmail("douglas.adams@example.com");
+            em.persist(author1);
+
             Book book = new Book();
             book.setTitle("The Hitchhiker's Guide to the Galaxy");
             book.setPrice(12.5F);
@@ -29,7 +31,13 @@ public class Main {
             book.setIllustrations(false);
             book.addChapter(new Chapter("The End of the World", book));
             book.addChapter(new Chapter("The Restaurant at the End of the Universe", book));
+            book.addAuthor(author1);
             em.persist(book);
+
+            Author author2 = new Author();
+            author2.setName("Jostein Gaarder");
+            author2.setEmail("jostein.gaarder@example.com");
+            em.persist(author2);
 
             Book book2 = new Book();
             book2.setTitle("El mundo de Sofía");
@@ -47,7 +55,13 @@ public class Main {
             addBook2.setStreet1("Av.Maldonado");
             book2.setLanguage(Language.SPANISH);
             book2.setPublisherAddress(addBook2);
+            book2.addAuthor(author2);
             em.persist(book2);
+
+            Author author3 = new Author();
+            author3.setName("J.R.R. Tolkien");
+            author3.setEmail("jrr.tolkien@example.com");
+            em.persist(author3);
 
             Book book3 = new Book();
             book3.setTitle("The Lord of the Rings");
@@ -65,7 +79,13 @@ public class Main {
             addLotr.setCountry("United Kingdom");
             addLotr.setStreet1("221B Baker Street");
             book3.setPublisherAddress(addLotr);
+            book3.addAuthor(author3);
             em.persist(book3);
+
+            Author author4 = new Author();
+            author4.setName("Miguel de Cervantes");
+            author4.setEmail("miguel.cervantes@example.com");
+            em.persist(author4);
 
             Book book4 = new Book();
             book4.setTitle("Don Quixote");
@@ -83,6 +103,7 @@ public class Main {
             addQuixote.setCountry("Spain");
             addQuixote.setStreet1("Plaza de España");
             book4.setPublisherAddress(addQuixote);
+            book4.addAuthor(author4);
             em.persist(book4);
 
             // Create and persist News objects
@@ -100,7 +121,7 @@ public class Main {
 
 
             tx.commit();
-            System.out.println("✅ SUCCESS: All books and news were saved to the database.");
+            System.out.println("✅ SUCCESS: All books, authors, and news were saved to the database.");
 
         } catch (Exception e) {
             if (tx != null && tx.isActive()) {
@@ -138,6 +159,27 @@ public class Main {
             for (int i = 0; i < chapters.size(); i++) {
                 System.out.println("   Index " + i + " -> " + chapters.get(i).getTitle());
             }
+        }
+
+        String queryString = "SELECT b FROM Book b WHERE b.title = :title";
+
+        Query query2 = em.createQuery(queryString);
+        query2.setParameter("title","El mundo de Sofía");
+        List<Book> booksSeco = query2.getResultList();
+
+        for(Book book: booksSeco) {
+
+            System.out.println("Book by title: " + book.getTitle());
+        }
+
+
+
+        List<Book> tolkienBooks = em.createNamedQuery("Book.findByAuthor", Book.class)
+                                    .setParameter("authorName", "J.R.R. Tolkien")
+                                    .getResultList();
+        System.out.println("\nBooks by J.R.R. Tolkien:");
+        for (Book bookResult : tolkienBooks) {
+            System.out.println(" - " + bookResult.getTitle());
         }
 
         // Close resources

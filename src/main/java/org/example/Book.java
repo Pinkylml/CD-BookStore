@@ -8,8 +8,17 @@ import java.util.List;
 
 
 @Entity
-@NamedQuery(name = "findAllBooks", query = "SELECT b FROM Book b")
+@NamedQueries({
+        @NamedQuery(name = "findAllBooks", query = "SELECT b FROM Book b"),
+        @NamedQuery(
+                name = "Book.findByAuthor",
+                query = "SELECT b FROM Book b JOIN b.authors a WHERE a.name = :authorName"
+        )
+
+})
+
 @DiscriminatorValue("B")
+
 public class Book extends Item {
 
     private String isbn;
@@ -47,7 +56,10 @@ public class Book extends Item {
     @JoinTable(name = "book_author")
     private List<Author> authors = new ArrayList<>();
 
-
+    public void addAuthor(Author author) {
+        this.authors.add(author);
+        author.getBooks().add(this);
+    }
 
 
     public Address getPublisherAddress() {
@@ -140,4 +152,11 @@ public class Book extends Item {
         this.chapters = chapters;
     }
 
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
 }
